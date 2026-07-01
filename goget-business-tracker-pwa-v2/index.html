@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#06b6d4" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="GoGet Tracker" />
+  <title>GoGet Business Tracker</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="icons/icon-96.png" alt="GoGet Tracker icon" class="brand-icon" />
+        <div class="brand-copy">
+          <p class="eyebrow">Moda Moca 110 · Business Mode</p>
+          <h1>GoGet Tracker</h1>
+        </div>
+      </div>
+      <button class="install-btn" id="installBtn" hidden>Install</button>
+    </header>
+
+    <main class="content">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <span class="shift-badge" id="shiftStatus">Shift belum mula</span>
+          <h2>Jangan bagi duit bocor.</h2>
+          <p>Track fare, kos, kilometer, masa dan untung bersih macam bisnes dispatch sebenar.</p>
+        </div>
+
+        <div class="summary-strip" id="liveSummary">
+          <div><span>Gross</span><strong>RM0.00</strong></div>
+          <div><span>Cost</span><strong>RM0.00</strong></div>
+          <div><span>Net</span><strong>RM0.00</strong></div>
+        </div>
+      </section>
+
+      <section class="card" id="shiftSection">
+        <div class="section-title">
+          <div>
+            <h2>Shift Hari Ini</h2>
+            <p id="todayLabel">—</p>
+          </div>
+        </div>
+
+        <div class="form-grid compact">
+          <label>
+            Odometer mula
+            <input id="odoStart" type="number" inputmode="decimal" step="0.1" placeholder="contoh 12500" />
+          </label>
+          <label>
+            Odometer akhir
+            <input id="odoEnd" type="number" inputmode="decimal" step="0.1" placeholder="isi masa end" />
+          </label>
+        </div>
+
+        <div class="action-grid">
+          <button class="btn primary" id="startShiftBtn">Start Shift</button>
+          <button class="btn danger" id="endShiftBtn">End Shift</button>
+        </div>
+      </section>
+
+      <section class="card" id="jobSection">
+        <div class="section-title">
+          <div>
+            <h2>Masuk Job</h2>
+            <p>Lepas job siap, terus key-in. 20 saat je.</p>
+          </div>
+        </div>
+
+        <form id="jobForm" class="form-grid">
+          <label>
+            Masa
+            <input id="jobTime" type="time" />
+          </label>
+          <label>
+            Fare RM
+            <input id="fare" type="number" inputmode="decimal" step="0.01" min="0" required placeholder="12.50" />
+          </label>
+          <label>
+            Tip / Extra RM
+            <input id="tip" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" />
+          </label>
+          <label>
+            Jarak KM
+            <input id="jobKm" type="number" inputmode="decimal" step="0.1" min="0" placeholder="5.4" />
+          </label>
+          <label>
+            Masa minit
+            <input id="jobMinutes" type="number" inputmode="numeric" step="1" min="0" placeholder="28" />
+          </label>
+          <label>
+            Job / Order ID
+            <input id="jobId" type="text" placeholder="optional" />
+          </label>
+          <label class="full">
+            Pickup
+            <input id="pickup" type="text" placeholder="contoh KB Mall" />
+          </label>
+          <label class="full">
+            Drop
+            <input id="dropoff" type="text" placeholder="contoh Pengkalan Chepa" />
+          </label>
+          <label class="full">
+            Catatan
+            <input id="jobNotes" type="text" placeholder="customer lambat, parking susah, job senang..." />
+          </label>
+
+          <div class="meter-preview full" id="jobPreview">
+            <div class="meter-head">
+              <strong>Preview Job Meter</strong>
+              <span>Isi fare, KM & minit</span>
+            </div>
+            <div class="meter">
+              <div style="width:0%"></div>
+            </div>
+            <p>Meter ni bantu tengok job tu padu, biasa atau makan minyak/masa.</p>
+          </div>
+
+          <button class="btn primary full" type="submit">Simpan Job</button>
+        </form>
+      </section>
+
+      <section class="card" id="expenseSection">
+        <div class="section-title">
+          <div>
+            <h2>Kos Operasi</h2>
+            <p>Minyak, makan, parking, repair kecil — semua kena nampak.</p>
+          </div>
+        </div>
+
+        <form id="expenseForm" class="form-grid">
+          <label>
+            Kategori
+            <select id="expenseCategory">
+              <option>Minyak</option>
+              <option>Makan</option>
+              <option>Parking/Tol</option>
+              <option>Maintenance</option>
+              <option>Telefon/Data</option>
+              <option>Motor Fund</option>
+              <option>Lain-lain</option>
+            </select>
+          </label>
+          <label>
+            Amount RM
+            <input id="expenseAmount" type="number" inputmode="decimal" step="0.01" min="0" required placeholder="8.00" />
+          </label>
+          <label class="full">
+            Catatan
+            <input id="expenseNotes" type="text" placeholder="minyak full tank, lunch, minyak hitam..." />
+          </label>
+          <button class="btn secondary full" type="submit">Simpan Kos</button>
+        </form>
+      </section>
+
+      <section class="card" id="dashboardSection">
+        <div class="section-title">
+          <div>
+            <h2>Meter Harian</h2>
+            <p>Summary hari ni okay ke bocor?</p>
+          </div>
+        </div>
+
+        <div class="daily-meter-card" id="dailyMeterCard">
+          <div class="meter-score">
+            <span id="dailyScore">0</span>
+            <small>/100</small>
+          </div>
+          <div class="meter-copy">
+            <strong id="dailyLabel">Belum cukup data</strong>
+            <p id="dailyAdvice">Start shift dan masukkan job pertama.</p>
+            <div class="meter big"><div id="dailyMeterBar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="target-box" id="targetProgress"></div>
+      </section>
+
+      <section class="card" id="logSection">
+        <div class="section-title split">
+          <div>
+            <h2>Log Hari Ini</h2>
+            <p>Setiap job ada meter sendiri.</p>
+          </div>
+          <div class="mini-actions">
+            <button class="btn ghost" id="exportCsvBtn">CSV</button>
+            <button class="btn ghost danger-text" id="clearTodayBtn">Clear</button>
+          </div>
+        </div>
+
+        <h3 class="subhead">Job</h3>
+        <div id="jobList" class="list"></div>
+
+        <h3 class="subhead">Expenses</h3>
+        <div id="expenseList" class="list"></div>
+      </section>
+
+      <section class="card settings" id="settingsSection">
+        <details>
+          <summary>Settings Bisnes</summary>
+          <div class="form-grid settings-grid">
+            <label>
+              Target net minimum / bulan
+              <input id="targetMin" type="number" inputmode="decimal" step="50" value="3000" />
+            </label>
+            <label>
+              Target net selesa / bulan
+              <input id="targetComfort" type="number" inputmode="decimal" step="50" value="4000" />
+            </label>
+            <label>
+              Komitmen wajib / bulan
+              <input id="monthlyCommitment" type="number" inputmode="decimal" step="50" value="2000" />
+            </label>
+            <label>
+              Hari kerja / bulan
+              <input id="workDays" type="number" inputmode="numeric" step="1" value="26" />
+            </label>
+            <label>
+              Harga minyak / liter
+              <input id="fuelPrice" type="number" inputmode="decimal" step="0.01" value="2.05" />
+            </label>
+            <label>
+              Anggaran KM / liter
+              <input id="kmPerLiter" type="number" inputmode="decimal" step="1" value="40" />
+            </label>
+            <label>
+              Maintenance reserve / KM
+              <input id="maintenancePerKm" type="number" inputmode="decimal" step="0.01" value="0.08" />
+            </label>
+            <label>
+              Makan bajet / shift
+              <input id="mealBudget" type="number" inputmode="decimal" step="1" value="12" />
+            </label>
+            <button class="btn primary full" id="saveSettingsBtn" type="button">Simpan Settings</button>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navigasi utama">
+      <a href="#shiftSection">Shift</a>
+      <a href="#jobSection">Job</a>
+      <a href="#expenseSection">Kos</a>
+      <a href="#dashboardSection">Meter</a>
+    </nav>
+  </div>
+
+  <dialog id="summaryDialog">
+    <div class="dialog-card">
+      <div class="dialog-top">
+        <img src="icons/icon-96.png" alt="" />
+        <div>
+          <h2>Summary Shift</h2>
+          <p id="summaryDate">Hari ini</p>
+        </div>
+      </div>
+      <div id="endSummary"></div>
+      <button class="btn primary full" id="closeSummaryBtn">Okay, ngam</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
